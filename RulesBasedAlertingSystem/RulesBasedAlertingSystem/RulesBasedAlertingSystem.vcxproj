@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{58EBF8A9-28F0-45F3-AE1C-C27695618992}</ProjectGuid>
+    <ProjectGuid>{E4983D53-F044-4EC7-BB37-3FCC461E2760}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RulesBasedAlertingSystem</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -135,13 +135,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RulesBasedAlertingSystem.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Alerts.h" />
-    <ClInclude Include="Device.h" />
-    <ClInclude Include="Patient.h" />
-    <ClInclude Include="PatientVitals.h" />
-    <ClInclude Include="RulesBasedAlertingSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

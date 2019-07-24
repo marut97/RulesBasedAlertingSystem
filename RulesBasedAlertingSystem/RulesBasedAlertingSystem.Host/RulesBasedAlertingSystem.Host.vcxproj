@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{E6221387-0704-4D75-96EF-FD746254998B}</ProjectGuid>
+    <ProjectGuid>{DBA79656-F2A0-4D5F-A32B-8E2BF21DEC28}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>RulesBasedAlertingSystemHost</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
@@ -146,12 +146,20 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ProjectReference Include="..\RulesBasedAlertingSystem\RulesBasedAlertingSystem.vcxproj">
-      <Project>{58ebf8a9-28f0-45f3-ae1c-c27695618992}</Project>
-    </ProjectReference>
+    <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="targetver.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="RulesBasedAlertingSystem.Host.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\RulesBasedAlertingSystem\RulesBasedAlertingSystem.vcxproj">
+      <Project>{e4983d53-f044-4ec7-bb37-3fcc461e2760}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
