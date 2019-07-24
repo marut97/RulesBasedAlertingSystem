@@ -136,6 +136,15 @@
   <ItemGroup>
     <ClCompile Include="RulesBasedAlertingSystem.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Alerts.h" />
+    <ClInclude Include="Device.h" />
+    <ClInclude Include="IDeviceRepository.h" />
+    <ClInclude Include="IPatientRepository.h" />
+    <ClInclude Include="IVitalsRepository.h" />
+    <ClInclude Include="Patient.h" />
+    <ClInclude Include="PatientVitals.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
