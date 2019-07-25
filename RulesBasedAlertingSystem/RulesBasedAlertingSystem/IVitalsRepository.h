@@ -1,5 +1,4 @@
 #pragma once
-#include "Device.h"
 #include "PatientVitals.h"
 
 namespace RulesBasedAlertingSystem {
@@ -7,7 +6,7 @@ namespace RulesBasedAlertingSystem {
 	{
 	public: 
 		virtual ~IVitalsRepository() {}
-		virtual bool writeVitals(Device device) = 0;
+		virtual bool writeVitals(PatientVitals vitals) = 0;
 		virtual std::vector<std::string> readVitals(std::string patientID) = 0;
 	};
 }
