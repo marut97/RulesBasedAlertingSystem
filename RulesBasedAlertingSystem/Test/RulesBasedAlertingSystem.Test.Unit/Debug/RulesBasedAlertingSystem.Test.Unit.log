@@ -1,4 +1,5 @@
-﻿  main.cpp
+﻿  stdafx.cpp
+  main.cpp
 c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\packages\googletest.1.8.3\build\native\include\gtest\gtest-message.h(224): warning C4251: 'testing::Message::ss_': class 'testing::internal::scoped_ptr<std::stringstream>' needs to have dll-interface to be used by clients of class 'testing::Message'
   c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\packages\googletest.1.8.3\build\native\include\gtest\gtest-message.h(224): note: see declaration of 'testing::internal::scoped_ptr<std::stringstream>'
 c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\packages\googletest.1.8.3\build\native\include\gtest\internal\gtest-filepath.h(200): warning C4251: 'testing::internal::FilePath::pathname_': class 'std::basic_string<char,std::char_traits<char>,std::allocator<char>>' needs to have dll-interface to be used by clients of class 'testing::internal::FilePath'
@@ -97,5 +98,5 @@ c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\packag
           [
               _Ty=int
           ]
-  RulesBasedAlertingSystem.Test.Unit.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\Debug\RulesBasedAlertingSystem.Test.Unit.exe
-  RulesBasedAlertingSystem.Test.Unit.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\Debug\RulesBasedAlertingSystem.Test.Unit.pdb (Full PDB)
+  Generating Code...
+LINK : fatal error LNK1104: cannot open file 'C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\Debug\RulesBasedAlertingSystem.lib'

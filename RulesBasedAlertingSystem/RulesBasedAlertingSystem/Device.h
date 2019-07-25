@@ -26,6 +26,7 @@ namespace RulesBasedAlertingSystem
 	struct Device
 	{
 		std::string deviceId;
+		Range validInputRange;
 		std::vector<Limits> limits;
 	};
 }
