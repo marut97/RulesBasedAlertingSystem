@@ -39,9 +39,15 @@
     <ClInclude Include="PatientVitals.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="IOLayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="RulesBasedAlertingSystem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="IOLayer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
