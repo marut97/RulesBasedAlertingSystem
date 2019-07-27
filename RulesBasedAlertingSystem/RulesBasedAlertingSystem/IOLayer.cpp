@@ -15,6 +15,7 @@ namespace RulesBasedAlertingSystem
 	std::string IOLayer::readMessage(std::string menu)
 	{
 		std::cout << menu << std::endl;
+		std::cin.ignore();
 		std::string input;
 		std::getline(std::cin, input);
 		return input;
