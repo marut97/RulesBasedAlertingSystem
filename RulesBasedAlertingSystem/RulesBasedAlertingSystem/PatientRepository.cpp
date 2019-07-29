@@ -9,9 +9,12 @@ using namespace std;
 namespace RulesBasedAlertingSystem 
 {
 
-	PatientRepository::PatientRepository()
+	PatientRepository::PatientRepository(bool temp)
 	{
-		patientRepoPath = "Database\\PatientRepo.txt";
+		if (!temp)
+			m_patientRepositoryPath = "..\\..\\Database\\PatientRepo.txt";
+		else
+			m_patientRepositoryPath = "..\\..\\TestDatabase\\PatientRepo.txt";
 	}
 
 	bool PatientRepository::checkPatientExists(string patientId)
@@ -19,7 +22,7 @@ namespace RulesBasedAlertingSystem
 
 		string line;
 		ifstream infile;
-		infile.open(patientRepoPath);
+		infile.open(m_patientRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -42,7 +45,7 @@ namespace RulesBasedAlertingSystem
 		int lineNum = 0;
 		string line;
 		ifstream infile;
-		infile.open(patientRepoPath);
+		infile.open(m_patientRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -181,7 +184,7 @@ namespace RulesBasedAlertingSystem
 
 		ofstream outFile;
 
-		outFile.open(patientRepoPath, ios::app);
+		outFile.open(m_patientRepositoryPath, ios::app);
 		if (!outFile)
 		{
 			return false;
@@ -214,7 +217,7 @@ namespace RulesBasedAlertingSystem
 	{
 		string line;
 		ifstream infile;
-		infile.open(patientRepoPath);
+		infile.open(m_patientRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -239,7 +242,7 @@ namespace RulesBasedAlertingSystem
 	{
 		string line;
 		ifstream infile;
-		infile.open(patientRepoPath);
+		infile.open(m_patientRepositoryPath);
 
 		vector<Patient> allPatient;
 		allPatient.clear();
@@ -276,7 +279,7 @@ namespace RulesBasedAlertingSystem
 
 		string line;
 
-		ifstream infile(patientRepoPath);
+		ifstream infile(m_patientRepositoryPath);
 		if (!infile)
 		{
 			return false;
@@ -294,8 +297,8 @@ namespace RulesBasedAlertingSystem
 
 		ofs.close();
 		infile.close();
-		std::remove(patientRepoPath);
-		std::rename("temp.txt", patientRepoPath);
+		std::remove(m_patientRepositoryPath.c_str());
+		std::rename("temp.txt", m_patientRepositoryPath.c_str());
 		return true;
 	}
 }

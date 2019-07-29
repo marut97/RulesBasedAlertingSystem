@@ -18,8 +18,8 @@ namespace RulesBasedAlertingSystem
 				EXPECT_EQ(sq.isEmpty(), true);
 				sq.enqueue(vitals);
 				EXPECT_EQ(sq.isEmpty(), false);
-				PatientVitals testvitals = sq.dequeue();
-				EXPECT_EQ(testvitals.patientId, vitals.patientId);
+				PatientVitals testVitals = sq.dequeue();
+				EXPECT_EQ(testVitals.patientId, vitals.patientId);
 
 				//EXPECT_EQ(sq.dequeue(), vitals);
 				EXPECT_EQ(sq.isEmpty(), true);

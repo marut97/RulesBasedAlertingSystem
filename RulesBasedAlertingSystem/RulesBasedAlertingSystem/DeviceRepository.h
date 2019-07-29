@@ -6,10 +6,10 @@ namespace RulesBasedAlertingSystem
 	class DeviceRepository : public IDeviceRepository
 	{
 
-	const char *deviceRepoPath;
+	
 
 	public:
-		DeviceRepository();
+		DeviceRepository(bool temp = false);
 		bool checkDeviceExist(std::string deviceId) override;
 		bool remove(std::string deviceId) override; 
 		bool registerNew(Device device) override;
@@ -20,5 +20,7 @@ namespace RulesBasedAlertingSystem
 		int getDeviceLineNumber(std::string deviceId);
 		std::string deviceToString(Device device);
 		Device stringToDevice(std::string line);
+	private:
+		std::string m_deviceRepositoryPath;
 	};
 }

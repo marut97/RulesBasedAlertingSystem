@@ -7,13 +7,21 @@
 namespace RulesBasedAlertingSystem
 {
 
-	VitalsRepository::VitalsRepository()
+	VitalsRepository::VitalsRepository(bool temp)
 	{
+		if (!temp)
+		{
+			m_vitalsRepositoryPath = "..\\..\\Database\\";
+		}
+		else
+		{
+			m_vitalsRepositoryPath = "..\\..\\TestDatabase\\";
+		}
 	}
 
 	bool VitalsRepository::writeVitals(PatientVitals vitals)
 	{
-		m_vitalsRepositoryPath = "Database\\"+vitals.patientId+".txt";
+		m_vitalsRepositoryPath.append(vitals.patientId+".txt");
 		std::string line = vitalsToString(vitals);
 		std::ofstream file;
 		file.open(m_vitalsRepositoryPath, std::ios::app);
@@ -28,7 +36,7 @@ namespace RulesBasedAlertingSystem
 
 	std::vector<PatientVitals> VitalsRepository::readVitals(std::string patientID)
 	{
-		m_vitalsRepositoryPath = "Database\\" + patientID + ".txt";
+		m_vitalsRepositoryPath.append(patientID + ".txt");
 		std::vector<PatientVitals> allVitals;
 		std::string line;
 		std::ifstream file;

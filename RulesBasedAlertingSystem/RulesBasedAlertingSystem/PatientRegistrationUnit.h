@@ -14,6 +14,8 @@ namespace RulesBasedAlertingSystem
 		void readInput();
 	private:
 		void generateDeviceList();
+		bool registerNewDevice(Patient patient, std::string menu);
+		bool updateDevice(Patient patient, std::string menu);
 		void updateRegisteredPatients();
 		void readAllRegisteredPatients();
 		void readRegisteredPatients();

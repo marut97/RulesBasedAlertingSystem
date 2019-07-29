@@ -1,7 +1,6 @@
 #include "IDeviceRepository.h"
 #include "DeviceRepository.h"
 #include <fstream>
-#include<iostream>
 #include <string>
 #include <sstream>
 
@@ -12,16 +11,19 @@ namespace RulesBasedAlertingSystem {
 
 
 
-	DeviceRepository::DeviceRepository()
+	DeviceRepository::DeviceRepository(bool temp)
 	{
-		 deviceRepoPath = "Database\\DeviceRepo.txt";
+		if (!temp)
+			m_deviceRepositoryPath = "..\\..\\Database\\DeviceRepo.txt";
+		else
+			m_deviceRepositoryPath = "..\\..\\TestDatabase\\DeviceRepo.txt";
 	}
 
 	bool DeviceRepository::checkDeviceExist(string deviceId)
 	{
 		string line;
 		ifstream infile;
-		infile.open(deviceRepoPath);
+		infile.open(m_deviceRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -47,7 +49,7 @@ namespace RulesBasedAlertingSystem {
 		int lineNum = 0;
 		string line;
 		ifstream infile;
-		infile.open(deviceRepoPath);
+		infile.open(m_deviceRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -171,7 +173,7 @@ namespace RulesBasedAlertingSystem {
 
 		ofstream outFile;
 
-		outFile.open(deviceRepoPath, ios::app);
+		outFile.open(m_deviceRepositoryPath, ios::app);
 		if (!outFile) 
 		{
 			return false;
@@ -204,7 +206,7 @@ namespace RulesBasedAlertingSystem {
 		
 		string line;
 		ifstream infile;
-		infile.open(deviceRepoPath);
+		infile.open(m_deviceRepositoryPath);
 
 		if (infile.is_open())
 		{
@@ -228,7 +230,7 @@ namespace RulesBasedAlertingSystem {
 	{
 		string line;
 		ifstream infile;
-		infile.open(deviceRepoPath);
+		infile.open(m_deviceRepositoryPath);
 
 		vector<Device> allDevices;
 		allDevices.clear();
@@ -265,7 +267,7 @@ namespace RulesBasedAlertingSystem {
 
 		string line;
 
-		ifstream infile(deviceRepoPath);
+		ifstream infile(m_deviceRepositoryPath);
 		if (!infile)
 		{
 			return false;
@@ -284,8 +286,8 @@ namespace RulesBasedAlertingSystem {
 		ofs.close();
 		infile.close();
 
-		std::remove(deviceRepoPath);
-		std::rename("temp.txt" ,deviceRepoPath);
+		std::remove(m_deviceRepositoryPath.c_str());
+		std::rename("temp.txt" , m_deviceRepositoryPath.c_str());
 		
 		
 		return true;

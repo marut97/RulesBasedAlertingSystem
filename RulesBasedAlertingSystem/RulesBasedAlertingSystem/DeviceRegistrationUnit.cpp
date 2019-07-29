@@ -26,7 +26,9 @@ namespace RulesBasedAlertingSystem
 			catch (...)
 			{
 				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				loopControl = true;
 			}
+			IOLayer::pause();
 			IOLayer::clearScreen();
 		} while (loopControl);
 	}

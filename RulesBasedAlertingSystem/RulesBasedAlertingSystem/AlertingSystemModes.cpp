@@ -8,6 +8,7 @@
 #include "IOLayer.h"
 #include "PatientRepository.h"
 #include "VitalsRepository.h"
+#include "DeviceRepository.h"
 using namespace std;
 
 namespace RulesBasedAlertingSystem {
@@ -30,7 +31,8 @@ namespace RulesBasedAlertingSystem {
 			try
 			{
 				selectMode(stoi(modeInput));
-				system("CLS");
+				IOLayer::pause();
+				IOLayer::clearScreen();
 			}
 			catch(...)
 			{

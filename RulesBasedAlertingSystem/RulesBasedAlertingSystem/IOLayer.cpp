@@ -43,6 +43,12 @@ namespace RulesBasedAlertingSystem
 		return input;
 	}
 
+	void IOLayer::pause()
+	{
+		std::cin.ignore();
+		std::cin.get();
+	}
+
 	void IOLayer::criticalAlert(std::string input)
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

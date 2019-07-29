@@ -7,11 +7,9 @@ namespace RulesBasedAlertingSystem
 	class PatientRepository : public IPatientRepository
 	{
 
-		const char *patientRepoPath;
-
 	public:
 
-		PatientRepository();
+		PatientRepository(bool temp = false);
 		bool checkPatientExists(std::string patientId) override;
 		int getPatientLineNumber(std::string patientId);
 		std::string patientToString(Patient patient);
@@ -21,7 +19,8 @@ namespace RulesBasedAlertingSystem
 		bool update(Patient patient) override;
 		Patient read(std::string patientId) override;
 		std::vector<Patient> readAll() override;
-
+	private:
+		std::string m_patientRepositoryPath;
 
 	};
 }
