@@ -1,2 +1,17 @@
-﻿  IOLayer.cpp
-  RulesBasedAlertingSystem.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\CaseStudy1WorkingRepo\RulesBasedAlertingSystem\x64\Debug\RulesBasedAlertingSystem.lib
+﻿  VitalsRepository.cpp
+  SharedQueue.cpp
+  ReceiverUnit.cpp
+  PatientRepository.cpp
+  PatientRegistrationUnit.cpp
+c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\rulesbasedalertingsystem\patientregistrationunit.cpp(46): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\rulesbasedalertingsystem\patientregistrationunit.cpp(77): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\rulesbasedalertingsystem\patientregistrationunit.cpp(164): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  json11.cpp
+  IOLayer.cpp
+  DeviceRepository.cpp
+  DeviceRegistrationUnit.cpp
+  AlertProcessingUnit.cpp
+  AlertingUnit.cpp
+  AlertingSystemModes.cpp
+  Generating Code...
+  RulesBasedAlertingSystem.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\x64\Debug\RulesBasedAlertingSystem.lib
