@@ -1,16 +1,16 @@
+#pragma once
 #include "Patient.h"
 #include "IPatientRepository.h"
-#include "DeviceRepository.h"
+#include "IInputOutputUnit.h"
 #include "DeviceRegistrationUnit.h"
 
 
 namespace RulesBasedAlertingSystem
 {
-
 	class PatientRegistrationUnit
 	{
 	public:
-		PatientRegistrationUnit(IPatientRepository &patientRepo, IDeviceRepository &deviceRepo);
+		PatientRegistrationUnit(IPatientRepository &patientRepo, IDeviceRepository &deviceRepo, IInputOutputUnit &inOut);
 		void readInput();
 	private:
 		void generateDeviceList();
@@ -26,6 +26,7 @@ namespace RulesBasedAlertingSystem
 	private:
 		IPatientRepository &m_patientRepo;
 		IDeviceRepository &m_deviceRepo;
+		IInputOutputUnit &m_inOut;
 		std::map<std::string, Device> m_deviceList;
 
 	};

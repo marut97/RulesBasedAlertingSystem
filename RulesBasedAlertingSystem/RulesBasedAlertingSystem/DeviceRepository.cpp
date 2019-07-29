@@ -16,7 +16,7 @@ namespace RulesBasedAlertingSystem {
 		if (!temp)
 			m_deviceRepositoryPath = "..\\..\\Database\\DeviceRepo.txt";
 		else
-			m_deviceRepositoryPath = "..\\..\\TestDatabase\\DeviceRepo.txt";
+			m_deviceRepositoryPath = "..\\..\\..\\TestDatabase\\DeviceRepo.txt";
 	}
 
 	bool DeviceRepository::checkDeviceExist(string deviceId)

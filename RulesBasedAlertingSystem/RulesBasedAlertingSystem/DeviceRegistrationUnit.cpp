@@ -3,13 +3,11 @@
 #include "IDeviceRepository.h"
 
 #include "Device.h"
-#include "IOLayer.h"
-#include<iostream>
 #include<string>
 using namespace std;
 namespace RulesBasedAlertingSystem
 {
-	DeviceRegistrationUnit::DeviceRegistrationUnit(IDeviceRepository &deviceRepo) : m_deviceRepository(deviceRepo)
+	DeviceRegistrationUnit::DeviceRegistrationUnit(IDeviceRepository &deviceRepo, IInputOutputUnit &inOut) : m_deviceRepository(deviceRepo), m_inOut(inOut)
 	{
 	}
 
@@ -18,22 +16,22 @@ namespace RulesBasedAlertingSystem
 		bool loopControl;
 		do
 		{
-			string input = IOLayer::readInput("Select \n1.New Device Registration   \n2.Update Registered Device  \n3.Delete Registered Device \n4.Read Device using DeviceID  \n5.Read All Devices  \n6.Exit");
+			string input = m_inOut.readInput("Select \n1.New Device Registration   \n2.Update Registered Device  \n3.Delete Registered Device \n4.Read Device using DeviceID  \n5.Read All Devices  \n6.Exit");
 			try
 			{			
-				loopControl = opartationInDeviceRegistration(stoi(input));
+				loopControl = operationInDeviceRegistration(stoi(input));
 			}
 			catch (...)
 			{
-				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				m_inOut.criticalAlert("Invalid input.  Try again... ");
 				loopControl = true;
 			}
-			IOLayer::pause();
-			IOLayer::clearScreen();
+			m_inOut.pause();
+			m_inOut.clearScreen();
 		} while (loopControl);
 	}
 
-	bool DeviceRegistrationUnit::opartationInDeviceRegistration(int operation)
+	bool DeviceRegistrationUnit::operationInDeviceRegistration(int operation)
 	{
 		switch (operation)
 		{
@@ -51,7 +49,7 @@ namespace RulesBasedAlertingSystem
 		case 6:
 			return false;
 		default:
-			IOLayer::criticalAlert("Invalid input.  Try again... ");
+			m_inOut.criticalAlert("Invalid input.  Try again... ");
 			break;
 		}
 		return true;
@@ -66,7 +64,7 @@ namespace RulesBasedAlertingSystem
 		do
 		{
 			validRangeFlag = true;
-			inputRange = IOLayer::readInput("Enter valid Input Range for the Device\n Min Range : ");
+			inputRange = m_inOut.readInput("Enter valid Input Range for the Device\n Min Range : ");
 
 			while (1)
 			{
@@ -77,12 +75,12 @@ namespace RulesBasedAlertingSystem
 				}
 				catch (...)
 				{
-					IOLayer::criticalAlert("Invalid input.  Try again... ");
-					inputRange = IOLayer::readInput("");
+					m_inOut.criticalAlert("Invalid input.  Try again... ");
+					inputRange = m_inOut.readInput("");
 				}
 			}
 
-			inputRange = IOLayer::readInput(" Max Range : ");
+			inputRange = m_inOut.readInput(" Max Range : ");
 
 			while (1)
 			{
@@ -93,15 +91,15 @@ namespace RulesBasedAlertingSystem
 				}
 				catch (...)
 				{
-					IOLayer::criticalAlert("Invalid input.  Try again... ");
-					inputRange = IOLayer::readInput("");
+					m_inOut.criticalAlert("Invalid input.  Try again... ");
+					inputRange = m_inOut.readInput("");
 				}
 			}
 
 			if (range.min >= range.max)
 			{
 				
-				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				m_inOut.criticalAlert("Invalid input.  Try again... ");
 				validRangeFlag = false;
 			}
 		} while (!validRangeFlag);
@@ -127,7 +125,7 @@ namespace RulesBasedAlertingSystem
 			
 			do {
 				validRangeFlag = true;
-				inputRange = IOLayer::readInput("Enter the  sub range starting from "+to_string(min)+" to ");
+				inputRange = m_inOut.readInput("Enter the  sub range starting from "+to_string(min)+" to ");
 				while (1)
 				{
 					try
@@ -137,15 +135,15 @@ namespace RulesBasedAlertingSystem
 					}
 					catch (...)
 					{
-						IOLayer::criticalAlert("Invalid input.  Try again... ");
-						inputRange = IOLayer::readInput("");
+						m_inOut.criticalAlert("Invalid input.  Try again... ");
+						inputRange = m_inOut.readInput("");
 					}
 				}
 
 
 				if (max > range.max || max<=min)
 				{
-					IOLayer::criticalAlert("Invalid input.  Try again... ");
+					m_inOut.criticalAlert("Invalid input.  Try again... ");
 					validRangeFlag = false;
 				}
 			} while (!validRangeFlag);
@@ -179,7 +177,7 @@ namespace RulesBasedAlertingSystem
 			validRangeFlag = true;
 
 
-			string inputType = IOLayer::readInput("Enter type of Range . \n1.Normal  \n2.Warning  \n3.Critical");
+			string inputType = m_inOut.readInput("Enter type of Range . \n1.Normal  \n2.Warning  \n3.Critical");
 
 			while (true)
 			{
@@ -190,8 +188,8 @@ namespace RulesBasedAlertingSystem
 				}
 				catch (...)
 				{
-					IOLayer::criticalAlert("Invalid input.  Try again... ");
-					inputType = IOLayer::readInput("");
+					m_inOut.criticalAlert("Invalid input.  Try again... ");
+					inputType = m_inOut.readInput("");
 				}
 			}
 	
@@ -215,7 +213,7 @@ namespace RulesBasedAlertingSystem
 			}
 			else
 			{
-				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				m_inOut.criticalAlert("Invalid input.  Try again... ");
 				validRangeFlag = false;
 			}
 		} while (!validRangeFlag);
@@ -225,7 +223,7 @@ namespace RulesBasedAlertingSystem
 	}
 	std::string DeviceRegistrationUnit::getMessage()
 	{
-		string message = IOLayer::readMessage("Enter the message for type :");
+		string message = m_inOut.readMessage("Enter the message for type :");
 		return message;
 
 	}
@@ -234,11 +232,11 @@ namespace RulesBasedAlertingSystem
 	void DeviceRegistrationUnit::registerDevice()
 	{
 		Device newDevice;
-		newDevice.deviceId = IOLayer::readInput("Enter Device ID : ");
+		newDevice.deviceId = m_inOut.readInput("Enter Device ID : ");
 		
 		if (m_deviceRepository.checkDeviceExist(newDevice.deviceId))
 		{
-			IOLayer::criticalAlert("Device Id already Exist");
+			m_inOut.criticalAlert("Device Id already Exist");
 			return;
 		}
 
@@ -250,11 +248,11 @@ namespace RulesBasedAlertingSystem
 		if (m_deviceRepository.registerNew(newDevice))
 		{
 
-			IOLayer::warningAlert("Device successfully registered");
+			m_inOut.warningAlert("Device successfully registered");
 		}
 		else
 		{
-			IOLayer::criticalAlert("Device registration failed");
+			m_inOut.criticalAlert("Device registration failed");
 		}
 		
 		
@@ -265,10 +263,10 @@ namespace RulesBasedAlertingSystem
 		
 		Device updateDevice;
 
-		updateDevice.deviceId = IOLayer::readInput("Enter Device ID : ");
+		updateDevice.deviceId = m_inOut.readInput("Enter Device ID : ");
 		if (!m_deviceRepository.checkDeviceExist(updateDevice.deviceId))
 		{
-			IOLayer::criticalAlert("Device Id does not Exist");
+			m_inOut.criticalAlert("Device Id does not Exist");
 			return;
 		}
 
@@ -278,11 +276,11 @@ namespace RulesBasedAlertingSystem
 
 		if (m_deviceRepository.registerNew(updateDevice))
 		{
-			IOLayer::warningAlert("Device successfully updated");
+			m_inOut.warningAlert("Device successfully updated");
 		}
 		else
 		{
-			IOLayer::criticalAlert("Device updation failed");
+			m_inOut.criticalAlert("Device updation failed");
 		}
 
 	}
@@ -294,21 +292,21 @@ namespace RulesBasedAlertingSystem
 		devicesList.clear();
 		devicesList = m_deviceRepository.readAll();
 		for (auto i = devicesList.begin(); i != devicesList.end(); i++)
-			IOLayer::display(i->toString());
+			m_inOut.display(i->toString());
 		/*if (devicesList.size() == 0)
 		{
-			IOLayer::criticalAlert("No Device found");
+			m_inOut.criticalAlert("No Device found");
 		}
 		else
 		{
 			for(Device device:devicesList)
 			{
-				IOLayer::warningAlert("\n\nDevice Id : "+ device.deviceId);
-				IOLayer::warningAlert("Device Vaild input range : "+to_string(device.validInputRange.min)+" to "+to_string(device.validInputRange.max));
+				m_inOut.warningAlert("\n\nDevice Id : "+ device.deviceId);
+				m_inOut.warningAlert("Device Vaild input range : "+to_string(device.validInputRange.min)+" to "+to_string(device.validInputRange.max));
 				for (int i = 0; i < device.limits.size(); i++)
 				{
-					IOLayer::warningAlert("Type : "+ getEnumTypeName(device.limits[i].type)+ " Range :"+to_string(device.limits[i].range.min)+" to "+to_string(device.limits[i].range.max));
-					IOLayer::warningAlert("Message : "+ device.limits[i].message);
+					m_inOut.warningAlert("Type : "+ getEnumTypeName(device.limits[i].type)+ " Range :"+to_string(device.limits[i].range.min)+" to "+to_string(device.limits[i].range.max));
+					m_inOut.warningAlert("Message : "+ device.limits[i].message);
 				}
 
 				
@@ -319,42 +317,42 @@ namespace RulesBasedAlertingSystem
 
 	void DeviceRegistrationUnit::readRegisteredDevice()
 	{
-		string deviceId = IOLayer::readInput("Enter Device ID : ");
+		string deviceId = m_inOut.readInput("Enter Device ID : ");
 		
 		Device device = (m_deviceRepository.read(deviceId));
-		IOLayer::display(device.toString());
+		m_inOut.display(device.toString());
 
 		/*if (device.deviceId == "")
 		{
-			IOLayer::criticalAlert("Device Id not found");
+			m_inOut.criticalAlert("Device Id not found");
 		}
 		else
 		{
 			string enumName;
-			IOLayer::warningAlert("Device Id : " + device.deviceId);
-			IOLayer::warningAlert("Device Vaild input range : " + to_string(device.validInputRange.min) + " to " + to_string(device.validInputRange.max));
+			m_inOut.warningAlert("Device Id : " + device.deviceId);
+			m_inOut.warningAlert("Device Vaild input range : " + to_string(device.validInputRange.min) + " to " + to_string(device.validInputRange.max));
 			for (int i = 0; i < device.limits.size(); i++)
 			{
 				
 				
 
-				IOLayer::warningAlert("Type : " + getEnumTypeName(device.limits[i].type) + " Range :" + to_string(device.limits[i].range.min) + " to " + to_string(device.limits[i].range.max));
-				IOLayer::warningAlert("Message : " + device.limits[i].message);
+				m_inOut.warningAlert("Type : " + getEnumTypeName(device.limits[i].type) + " Range :" + to_string(device.limits[i].range.min) + " to " + to_string(device.limits[i].range.max));
+				m_inOut.warningAlert("Message : " + device.limits[i].message);
 			}
 		}
 */
 	}
 	void DeviceRegistrationUnit::deleteRegisteredDevice()
 	{
-		string deviceId = IOLayer::readInput("Enter Device ID : ");
+		string deviceId = m_inOut.readInput("Enter Device ID : ");
 		
 		if (m_deviceRepository.remove(deviceId))
 		{
-			IOLayer::warningAlert("Device Id " + deviceId + " successfully deleted");
+			m_inOut.warningAlert("Device Id " + deviceId + " successfully deleted");
 		}
 		else
 		{
-			IOLayer::criticalAlert("Deletion is failed");
+			m_inOut.criticalAlert("Deletion is failed");
 		}
 	}
 

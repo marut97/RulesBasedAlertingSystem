@@ -4,7 +4,7 @@
 
 namespace RulesBasedAlertingSystem
 {
-	AlertProcessingUnit::AlertProcessingUnit(IPatientRepository &patientRepo, IVitalsRepository &vitalsRepo) : m_patientRepository(patientRepo) , m_vitalsRepository(vitalsRepo)
+	AlertProcessingUnit::AlertProcessingUnit(IPatientRepository &patientRepo, IVitalsRepository &vitalsRepo, IInputOutputUnit &inOut) : m_patientRepository(patientRepo) , m_vitalsRepository(vitalsRepo), m_inOut(inOut)
 	{
 	}
 
@@ -16,10 +16,10 @@ namespace RulesBasedAlertingSystem
 		for (auto i = patientsList.begin(); i != patientsList.end(); i++)
 			patientMap.insert({ i->patientId, *i });
 		//Create a new thread for reciever unit
-		ReceiverUnit receiver(m_queue, patientMap);
+		ReceiverUnit receiver(m_queue, patientMap, m_inOut);
 		std::thread inputThread(&ReceiverUnit::inputProcess, receiver);
 		//Initialize Alert and create its object
-		AlertingUnit alertingUnit(patientMap);
+		AlertingUnit alertingUnit(patientMap, m_inOut);
 		//Call process
 		process(alertingUnit);
 		inputThread.join();

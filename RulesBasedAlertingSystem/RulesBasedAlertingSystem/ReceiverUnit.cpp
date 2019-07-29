@@ -1,10 +1,9 @@
 #include "ReceiverUnit.h"
-#include "IOLayer.h"
 #include "json11.hpp"
 
 namespace RulesBasedAlertingSystem
 {
-	ReceiverUnit::ReceiverUnit(SharedQueue &queue, std::map<std::string, Patient> &map) : m_queue(queue), m_map(map)
+	ReceiverUnit::ReceiverUnit(SharedQueue &queue, std::map<std::string, Patient> &map, IInputOutputUnit &inOut ) : m_queue(queue), m_map(map), m_inOut(inOut)
 	{
 	}
 
@@ -13,7 +12,7 @@ namespace RulesBasedAlertingSystem
 		bool loopControl;
 		do
 		{
-			std::string input = IOLayer::readVitals();
+			std::string input = m_inOut.readVitals();
 			loopControl = input.empty();
 			if (!loopControl)
 			{
@@ -32,7 +31,7 @@ namespace RulesBasedAlertingSystem
 			vitals.patientId = object["patientId"].string_value();
 		else
 		{
-			IOLayer::warningAlert("Patient ID not provided");
+			m_inOut.warningAlert("Patient ID not provided");
 			return false;
 		}
 		auto devs = m_map[vitals.patientId].devices;
@@ -42,7 +41,7 @@ namespace RulesBasedAlertingSystem
 			temp.deviceId = i->first;
 			if (object[i->first].is_null())
 			{
-				IOLayer::warningAlert("Device Not Registered");
+				m_inOut.warningAlert("Device Not Registered");
 				return false;
 			}
 			else
@@ -53,7 +52,7 @@ namespace RulesBasedAlertingSystem
 					vitals.vitals.push_back(temp);
 					continue;
 				}
-				IOLayer::warningAlert("Device Value Not Acceptable, Device ID : "+ temp.deviceId);
+				m_inOut.warningAlert("Device Value Not Acceptable, Device ID : "+ temp.deviceId);
 				return false;
 			}
 		}

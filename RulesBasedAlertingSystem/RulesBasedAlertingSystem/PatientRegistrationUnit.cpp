@@ -1,10 +1,9 @@
 #include "PatientRegistrationUnit.h"
 #include "AlertingSystemModes.h"
-#include "IOLayer.h"
 
 namespace RulesBasedAlertingSystem
 {
-	PatientRegistrationUnit::PatientRegistrationUnit(IPatientRepository &patientRepo, IDeviceRepository &deviceRepo) : m_patientRepo(patientRepo), m_deviceRepo(deviceRepo)
+	PatientRegistrationUnit::PatientRegistrationUnit(IPatientRepository &patientRepo, IDeviceRepository &deviceRepo, IInputOutputUnit &inOut) : m_patientRepo(patientRepo), m_deviceRepo(deviceRepo), m_inOut(inOut)
 	{
 	}
 	void PatientRegistrationUnit::readInput()
@@ -13,16 +12,16 @@ namespace RulesBasedAlertingSystem
 		bool loopControl;
 		do
 		{
-			std::string input = IOLayer::readInput("Select \n1.New Patient Registration   \n2.Update Registered Patient  \n3.Delete Registered Patient \n4.Read Patient using Patient ID  \n5.Read All Patients  \n6.Exit");
+			std::string input = m_inOut.readInput("Select \n1.New Patient Registration   \n2.Update Registered Patient  \n3.Delete Registered Patient \n4.Read Patient using Patient ID  \n5.Read All Patients  \n6.Exit");
 			try
 			{
 				loopControl = operationInPatientRegistration(stoi(input));
 			}
 			catch (...)
 			{
-				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				m_inOut.display("Invalid input.  Try again... ");
 			}
-			IOLayer::clearScreen();
+			m_inOut.clearScreen();
 		} while (loopControl);
 	}
 	void PatientRegistrationUnit::generateDeviceList()
@@ -43,17 +42,17 @@ namespace RulesBasedAlertingSystem
 			menu.append(i->first + "\n");
 		}
 		menu.append("0 to exit...\n");
-		std::string deviceID = IOLayer::readDevices(menu, m_deviceList.size());
+		std::string deviceID = m_inOut.readInput(menu);
 		if (stoi(deviceID) == 0)
 			loopControl = false;
 		else if (m_deviceList.find(deviceID) == m_deviceList.end())
 		{
-			IOLayer::criticalAlert("Device Does not exist. Try Again\n");
+			m_inOut.display("Device Does not exist. Try Again\n");
 			loopControl = true;
 		}
 		else if (patient.devices.find(deviceID) != patient.devices.end())
 		{
-			IOLayer::criticalAlert("Device Already registered. Try Again\n");
+			m_inOut.display("Device Already registered. Try Again\n");
 			loopControl = true;
 		}
 		else
@@ -74,17 +73,17 @@ namespace RulesBasedAlertingSystem
 			menu.append(i->first + "\n");
 		}
 		menu.append("0 to exit...\n");
-		std::string deviceID = IOLayer::readDevices(menu, m_deviceList.size());
+		std::string deviceID = m_inOut.readInput(menu);
 		if (stoi(deviceID) == 0)
 			loopControl = false;
 		else if (m_deviceList.find(deviceID) == m_deviceList.end())
 		{
-			IOLayer::criticalAlert("Device Does not exist. Try Again\n");
+			m_inOut.display("Device Does not exist. Try Again\n");
 			loopControl = true;
 		}
 		else if (patient.devices.find(deviceID) == patient.devices.end())
 		{
-			IOLayer::criticalAlert("Device Not registered. Try Again\n");
+			m_inOut.display("Device Not registered. Try Again\n");
 			loopControl = true;
 		}
 		else
@@ -99,10 +98,10 @@ namespace RulesBasedAlertingSystem
 
 	void PatientRegistrationUnit::updateRegisteredPatients()
 	{
-		std::string patientID = IOLayer::readInput("Enter Patient ID : ");
+		std::string patientID = m_inOut.readInput("Enter Patient ID : ");
 		if (!m_patientRepo.checkPatientExists(patientID))
 		{
-			IOLayer::criticalAlert("Patient doesn't exist");
+			m_inOut.display("Patient doesn't exist");
 			return;
 		}
 		else
@@ -112,7 +111,7 @@ namespace RulesBasedAlertingSystem
 			std::string menu;
 			do
 			{
-				std::string input = IOLayer::readInput("1. Register New Device \n2. Update Registered Device \nAny other key to exit..");
+				std::string input = m_inOut.readInput("1. Register New Device \n2. Update Registered Device \nAny other key to exit..");
 				if (stoi(input) == 1)
 					loopControl = registerNewDevice(patient, menu);
 				else if (stoi(input) == 2)
@@ -127,28 +126,28 @@ namespace RulesBasedAlertingSystem
 	{
 		auto patients = m_patientRepo.readAll();
 		for (auto i = patients.begin(); i != patients.end(); i++)
-			IOLayer::display(i->toString());
+			m_inOut.display(i->toString());
 	}
 	void PatientRegistrationUnit::readRegisteredPatients()
 	{
-		std::string patientId = IOLayer::readInput("Enter Patient ID");
-		IOLayer::display(m_patientRepo.read(patientId).toString());
+		std::string patientId = m_inOut.readInput("Enter Patient ID");
+		m_inOut.display(m_patientRepo.read(patientId).toString());
 	}
 	void PatientRegistrationUnit::deleteRegisteredPatient()
 	{
-		std::string patientId = IOLayer::readInput("Enter Patient ID");
+		std::string patientId = m_inOut.readInput("Enter Patient ID");
 		if (m_patientRepo.remove(patientId))
-			IOLayer::display("Removal Successful");
+			m_inOut.display("Removal Successful");
 		else
-			IOLayer::display("RemovalUnsuccessful");
+			m_inOut.display("RemovalUnsuccessful");
 	}
 	void PatientRegistrationUnit::registerPatient()
 	{
 		Patient newPatient;
-		newPatient.patientId = IOLayer::readInput("Enter Patient ID : ");
+		newPatient.patientId = m_inOut.readInput("Enter Patient ID : ");
 		if (m_patientRepo.checkPatientExists(newPatient.patientId))
 		{
-			IOLayer::criticalAlert("Patient Id already Exists");
+			m_inOut.criticalAlert("Patient Id already Exists");
 			return;
 		}
 		bool loopControl;
@@ -161,17 +160,17 @@ namespace RulesBasedAlertingSystem
 				menu.append(i->first + "\n");
 			}
 			menu.append("0 to exit...\n");
-			std::string deviceID = IOLayer::readDevices(menu, m_deviceList.size());
+			std::string deviceID = m_inOut.readInput(menu);
 			if (stoi(deviceID) == 0)
 				loopControl = false;
 			else if (m_deviceList.find(deviceID) == m_deviceList.end())
 			{
-				IOLayer::criticalAlert("Device Does not exist. Try Again\n");
+				m_inOut.criticalAlert("Device Does not exist. Try Again\n");
 				loopControl = true;
 			}
 			else if (newPatient.devices.find(deviceID) != newPatient.devices.end())
 			{
-				IOLayer::criticalAlert("Device Already registered. Try Again\n");
+				m_inOut.criticalAlert("Device Already registered. Try Again\n");
 				loopControl = true;
 			}
 			else
@@ -190,11 +189,12 @@ namespace RulesBasedAlertingSystem
 	{
 		Device newDevice;
 		newDevice.deviceId = deviceID;
-		std::string input = IOLayer::readInput("Do you want to set custom ranges for the device?\n(y/n)\n");
+		std::string input = m_inOut.readInput("Do you want to set custom ranges for the device?\n(y/n)\n");
 		if (input == "y" || input == "Y")
 		{
-			newDevice.validInputRange = DeviceRegistrationUnit::getValidLimitsRange();
-			newDevice.limits = DeviceRegistrationUnit::getLimits(newDevice.validInputRange);
+			DeviceRegistrationUnit device(m_deviceRepo, m_inOut);
+			newDevice.validInputRange = device.getValidLimitsRange();
+			newDevice.limits = device.getLimits(newDevice.validInputRange);
 			return newDevice;
 		}
 			return m_deviceList[deviceID];
@@ -216,7 +216,7 @@ namespace RulesBasedAlertingSystem
 		case 6:
 			return false;
 		default:
-			IOLayer::criticalAlert("Invalid input.  Try again... ");
+			m_inOut.criticalAlert("Invalid input.  Try again... ");
 			break;
 		}
 		return true;

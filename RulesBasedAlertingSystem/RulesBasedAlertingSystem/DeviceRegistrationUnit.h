@@ -1,5 +1,6 @@
 #pragma once
 #include "IDeviceRepository.h"
+#include "IInputOutputUnit.h"
 #include <string>
 
 namespace RulesBasedAlertingSystem
@@ -12,19 +13,19 @@ namespace RulesBasedAlertingSystem
 		void readRegisteredDevice();
 		void deleteRegisteredDevice();
 		void registerDevice();
-		bool opartationInDeviceRegistration(int operation);
+		bool operationInDeviceRegistration(int operation);
 		std::string getEnumTypeName(int);
 
 	public:		
-		DeviceRegistrationUnit(IDeviceRepository &deviceRepo);
+		DeviceRegistrationUnit(IDeviceRepository &deviceRepo, IInputOutputUnit &inOut);
 		void readInput();
-		static std::vector<Limits> getLimits(Range range);
-		static Range getValidLimitsRange();
-		static std::string getMessage();
-		static Type getTypeOfRange();
+		std::vector<Limits> getLimits(Range range);
+		Range getValidLimitsRange();
+		std::string getMessage();
+		Type getTypeOfRange();
 
 	private:
 		IDeviceRepository &m_deviceRepository;
-
+		IInputOutputUnit &m_inOut;
 	};
 }

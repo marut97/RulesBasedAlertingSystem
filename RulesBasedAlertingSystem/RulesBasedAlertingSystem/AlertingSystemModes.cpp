@@ -5,7 +5,7 @@
 
 #include<iostream>
 #include<string>
-#include "IOLayer.h"
+#include "ConsoleInputOutput.h"
 #include "PatientRepository.h"
 #include "VitalsRepository.h"
 #include "DeviceRepository.h"
@@ -18,6 +18,7 @@ namespace RulesBasedAlertingSystem {
 		m_deviceRepository.reset(new DeviceRepository());
 		m_patientRepository.reset(new PatientRepository);
 		m_vitalsRepository.reset(new VitalsRepository);
+		m_inOut.reset(new ConsoleInputOutput());
 	}
 
 	void AlertingSystemModes::displayModes()
@@ -27,16 +28,16 @@ namespace RulesBasedAlertingSystem {
 		string modeInput;
 		do
 		{
-			modeInput =IOLayer::readInput("Select \n1.Device Registration   \n2.Patient Registration  \n3.Patient Monitor  \n4.Exit");
+			modeInput = m_inOut->readInput("Select \n1.Device Registration   \n2.Patient Registration  \n3.Patient Monitor  \n4.Exit");
 			try
 			{
 				selectMode(stoi(modeInput));
-				IOLayer::pause();
-				IOLayer::clearScreen();
+				m_inOut->pause();
+				m_inOut->clearScreen();
 			}
 			catch(...)
 			{
-				IOLayer::criticalAlert("Invalid input.  Try again... ");
+				m_inOut->criticalAlert("Invalid input.  Try again... ");
 			}
 			
 		} while (true);
@@ -45,9 +46,9 @@ namespace RulesBasedAlertingSystem {
 
 	void AlertingSystemModes::selectMode(int mode)
 	{
-		DeviceRegistrationUnit deviceRegistration(*m_deviceRepository);
-		PatientRegistrationUnit patientRegistration(*m_patientRepository, *m_deviceRepository);
-		AlertProcessingUnit alertProcessingUnit(*m_patientRepository, *m_vitalsRepository);
+		DeviceRegistrationUnit deviceRegistration(*m_deviceRepository, *m_inOut);
+		PatientRegistrationUnit patientRegistration(*m_patientRepository, *m_deviceRepository, *m_inOut);
+		AlertProcessingUnit alertProcessingUnit(*m_patientRepository, *m_vitalsRepository, *m_inOut);
 
 		switch (mode)
 		{
@@ -63,7 +64,7 @@ namespace RulesBasedAlertingSystem {
 		case 4:
 			exit(0);
 		default:
-			IOLayer::criticalAlert("Invalid input.  Try again... ");
+			m_inOut->criticalAlert("Invalid input.  Try again... ");
 			break;
 		}
 	}

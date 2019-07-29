@@ -1,11 +1,11 @@
-#include "IOLayer.h"
+#include "ConsoleInputOutput.h"
 #include "iostream"
 #include <windows.h>
 #include <stdlib.h>
 
 namespace RulesBasedAlertingSystem
 {
-	std::string IOLayer::readInput(std::string menu)
+	std::string ConsoleInputOutput::readInput(std::string menu)
 	{
 		std::cout << menu << std::endl;
 		std::string input;
@@ -13,7 +13,7 @@ namespace RulesBasedAlertingSystem
 		return input;
 	}
 
-	std::string IOLayer::readMessage(std::string menu)
+	std::string ConsoleInputOutput::readMessage(std::string menu)
 	{
 		std::cout << menu << std::endl;
 		std::cin.ignore();
@@ -22,34 +22,26 @@ namespace RulesBasedAlertingSystem
 		return input;
 	}
 
-	std::string IOLayer::readDevices(std::string menu, int deviceSize)
-	{
-		std::cout << menu << std::endl;
-		std::string input;
-		std::cin >> input;
-		return input;
-	}
-
-	void IOLayer::display(std::string output)
+	void ConsoleInputOutput::display(std::string output)
 	{
 		std::cout << output << std::endl;
 
 	}
 
-	std::string IOLayer::readVitals()
+	std::string ConsoleInputOutput::readVitals()
 	{
 		std::string input;
 		std::getline(std::cin, input);
 		return input;
 	}
 
-	void IOLayer::pause()
+	void ConsoleInputOutput::pause()
 	{
 		std::cin.ignore();
 		std::cin.get();
 	}
 
-	void IOLayer::criticalAlert(std::string input)
+	void ConsoleInputOutput::criticalAlert(std::string input)
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hConsole, 12);
@@ -57,14 +49,14 @@ namespace RulesBasedAlertingSystem
 		SetConsoleTextAttribute(hConsole, 7);
 	}
 
-	void IOLayer::warningAlert(std::string input)
+	void ConsoleInputOutput::warningAlert(std::string input)
 	{
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		SetConsoleTextAttribute(hConsole, 14);
 		std::cout << input << std::endl;
 		SetConsoleTextAttribute(hConsole, 7);
 	}
-	void IOLayer::clearScreen()
+	void ConsoleInputOutput::clearScreen()
 	{
 		system("CLS");
 	}

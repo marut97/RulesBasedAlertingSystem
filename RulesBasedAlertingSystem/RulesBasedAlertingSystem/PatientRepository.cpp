@@ -1,6 +1,5 @@
 #include "PatientRepository.h"
 #include <fstream>
-#include<iostream>
 #include <string>
 #include <sstream>
 using namespace std;
@@ -14,7 +13,7 @@ namespace RulesBasedAlertingSystem
 		if (!temp)
 			m_patientRepositoryPath = "..\\..\\Database\\PatientRepo.txt";
 		else
-			m_patientRepositoryPath = "..\\..\\TestDatabase\\PatientRepo.txt";
+			m_patientRepositoryPath = "..\\..\\..\\TestDatabase\\PatientRepo.txt";
 	}
 
 	bool PatientRepository::checkPatientExists(string patientId)

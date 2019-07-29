@@ -3,6 +3,7 @@
 #include "Patient.h"
 #include "PatientVitals.h"
 #include "IPatientRepository.h"
+#include "IInputOutputUnit.h"
 
 namespace RulesBasedAlertingSystem
 {
@@ -10,7 +11,7 @@ namespace RulesBasedAlertingSystem
 	{
 
 	public: 
-		AlertingUnit(std::map< std::string, Patient> &patientList);
+		AlertingUnit(std::map< std::string, Patient> &patientList, IInputOutputUnit &inOut);
 		void checkLimits(PatientVitals vitals);
 	private:
 		void alertUser();
@@ -19,5 +20,6 @@ namespace RulesBasedAlertingSystem
 		std::map< std::string, std::vector<Alerts> > m_criticalMap;
 		std::map< std::string, std::vector<Alerts> > m_warningMap;
 		std::map< std::string, Patient> m_patientList;
+		IInputOutputUnit &m_inOut;
 	};
 }

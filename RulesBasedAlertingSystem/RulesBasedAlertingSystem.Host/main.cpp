@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <string>
-#include "../RulesBasedAlertingSystem/IOLayer.h"
 #include "../RulesBasedAlertingSystem/AlertingSystemModes.h"
 
 int main()

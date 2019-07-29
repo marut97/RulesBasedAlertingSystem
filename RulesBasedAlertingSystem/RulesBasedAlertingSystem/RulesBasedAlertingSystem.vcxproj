@@ -139,7 +139,7 @@
     <ClCompile Include="AlertProcessingUnit.cpp" />
     <ClCompile Include="DeviceRegistrationUnit.cpp" />
     <ClCompile Include="DeviceRepository.cpp" />
-    <ClCompile Include="IOLayer.cpp" />
+    <ClCompile Include="ConsoleInputOutput.cpp" />
     <ClCompile Include="json11.cpp" />
     <ClCompile Include="PatientRegistrationUnit.cpp" />
     <ClCompile Include="PatientRepository.cpp" />
@@ -156,7 +156,8 @@
     <ClInclude Include="DeviceRegistrationUnit.h" />
     <ClInclude Include="DeviceRepository.h" />
     <ClInclude Include="IDeviceRepository.h" />
-    <ClInclude Include="IOLayer.h" />
+    <ClInclude Include="IInputOutputUnit.h" />
+    <ClInclude Include="ConsoleInputOutput.h" />
     <ClInclude Include="IPatientRepository.h" />
     <ClInclude Include="IVitalsRepository.h" />
     <ClInclude Include="json11.hpp" />

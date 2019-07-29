@@ -15,7 +15,7 @@ namespace RulesBasedAlertingSystem
 		}
 		else
 		{
-			m_vitalsRepositoryPath = "..\\..\\TestDatabase\\";
+			m_vitalsRepositoryPath = "..\\..\\..\\TestDatabase\\";
 		}
 	}
 

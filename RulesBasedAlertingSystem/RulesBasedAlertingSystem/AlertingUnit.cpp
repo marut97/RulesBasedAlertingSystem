@@ -1,9 +1,8 @@
 #include "AlertingUnit.h"
-#include "IOLayer.h"
 
 namespace RulesBasedAlertingSystem
 {
-	AlertingUnit::AlertingUnit(std::map< std::string, Patient> &patientList) : m_patientList(patientList)
+	AlertingUnit::AlertingUnit(std::map< std::string, Patient> &patientList, IInputOutputUnit &inOut) : m_patientList(patientList) , m_inOut(inOut)
 	{
 		for (auto i = m_patientList.begin(); i != m_patientList.end(); i++)
 		{
@@ -23,37 +22,37 @@ namespace RulesBasedAlertingSystem
 	{
 
 		//Add clear screen here...
-		IOLayer::clearScreen();
-		IOLayer::criticalAlert("\tCritical");
-		IOLayer::criticalAlert("************************");
-		IOLayer::criticalAlert("************************");
+		m_inOut.clearScreen();
+		m_inOut.criticalAlert("\tCritical");
+		m_inOut.criticalAlert("************************");
+		m_inOut.criticalAlert("************************");
 		for (auto itr = m_criticalMap.begin(); itr != m_criticalMap.end(); itr++)
 		{
 			//Fix for displaying the vector
 			if (itr->second.empty())
 				continue;
-			IOLayer::criticalAlert("Patient ID : " + itr->first + "\n");
+			m_inOut.criticalAlert("Patient ID : " + itr->first + "\n");
 			//do the same fix as above
 			for each (Alerts var in itr->second)
 			{
-				IOLayer::criticalAlert(var.toString());
+				m_inOut.criticalAlert(var.toString());
 			}
-			IOLayer::warningAlert("----------------------");
+			m_inOut.warningAlert("----------------------");
 		}
-		IOLayer::warningAlert("\tWarning");
-		IOLayer::criticalAlert("************************");
-		IOLayer::criticalAlert("************************");
+		m_inOut.warningAlert("\tWarning");
+		m_inOut.criticalAlert("************************");
+		m_inOut.criticalAlert("************************");
 		for (auto itr = m_warningMap.begin(); itr != m_warningMap.end(); itr++)
 		{
 			if (itr->second.empty())
 				continue;
-			IOLayer::warningAlert("Patient ID : " + itr->first+"\n");
+			m_inOut.warningAlert("Patient ID : " + itr->first+"\n");
 			//do the same fix as above
 			for each (Alerts var in itr->second)
 			{
-				IOLayer::warningAlert(var.toString());
+				m_inOut.warningAlert(var.toString());
 			}
-			IOLayer::warningAlert("----------------------");
+			m_inOut.warningAlert("----------------------");
 		}
 	}
 
