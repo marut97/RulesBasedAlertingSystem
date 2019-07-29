@@ -1,14 +1,5 @@
-﻿  VitalsRepository.cpp
-  SharedQueue.cpp
-  ReceiverUnit.cpp
-  PatientRepository.cpp
-  PatientRegistrationUnit.cpp
-  json11.cpp
-  ConsoleInputOutput.cpp
-  DeviceRepository.cpp
-  DeviceRegistrationUnit.cpp
-  AlertProcessingUnit.cpp
-  AlertingUnit.cpp
-  AlertingSystemModes.cpp
+﻿  AlertingSystemModes.cpp
   Generating Code...
-  RulesBasedAlertingSystem.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\x64\Debug\RulesBasedAlertingSystem.lib
+  Skipping... (no relevant changes detected)
+  PatientRegistrationUnit.cpp
+  RulesBasedAlertingSystem.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\CaseStudy1WorkingRepo\RulesBasedAlertingSystem\x64\Debug\RulesBasedAlertingSystem.lib

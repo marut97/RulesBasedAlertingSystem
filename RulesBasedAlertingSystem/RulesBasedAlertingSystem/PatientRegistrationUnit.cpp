@@ -33,7 +33,7 @@ namespace RulesBasedAlertingSystem
 		}
 	}
 
-	bool PatientRegistrationUnit::registerNewDevice(Patient patient, std::string menu)
+	bool PatientRegistrationUnit::registerNewDevice(Patient &patient, std::string menu)
 	{
 		bool loopControl;
 		menu.append("Enter Device ID : \nAvailable Devices are :\n");
@@ -43,7 +43,7 @@ namespace RulesBasedAlertingSystem
 		}
 		menu.append("0 to exit...\n");
 		std::string deviceID = m_inOut.readInput(menu);
-		if (stoi(deviceID) == 0)
+		if (deviceID == "0")
 			loopControl = false;
 		else if (m_deviceList.find(deviceID) == m_deviceList.end())
 		{
@@ -64,7 +64,7 @@ namespace RulesBasedAlertingSystem
 		return loopControl;
 	}
 
-	bool PatientRegistrationUnit::updateDevice(Patient patient, std::string menu)
+	bool PatientRegistrationUnit::updateDevice(Patient &patient, std::string menu)
 	{
 		bool loopControl;
 		menu.append("Enter Device ID : \nAvailable Devices are :\n");
@@ -112,14 +112,19 @@ namespace RulesBasedAlertingSystem
 			do
 			{
 				std::string input = m_inOut.readInput("1. Register New Device \n2. Update Registered Device \nAny other key to exit..");
-				if (stoi(input) == 1)
+				if (input == "1")
 					loopControl = registerNewDevice(patient, menu);
-				else if (stoi(input) == 2)
+				else if (input == "2")
 				{
 					loopControl = updateDevice(patient, menu);
 				}
+				else
+				{
+					loopControl = false;
+				}
 			}
 			while (loopControl);
+			m_patientRepo.update(patient);
 		}
 	}
 	void PatientRegistrationUnit::readAllRegisteredPatients()
@@ -182,10 +187,10 @@ namespace RulesBasedAlertingSystem
 
 		}
 		while (loopControl);
+		m_patientRepo.registerNew(newPatient);
 	}
 
-	RulesBasedAlertingSystem::Device RulesBasedAlertingSystem::PatientRegistrationUnit::registerDevice(
-		std::string deviceID)
+	Device PatientRegistrationUnit::registerDevice(std::string deviceID)
 	{
 		Device newDevice;
 		newDevice.deviceId = deviceID;

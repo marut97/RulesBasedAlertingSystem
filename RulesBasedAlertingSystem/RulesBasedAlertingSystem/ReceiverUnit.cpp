@@ -31,7 +31,7 @@ namespace RulesBasedAlertingSystem
 			vitals.patientId = object["patientId"].string_value();
 		else
 		{
-			m_inOut.warningAlert("Patient ID not provided");
+			m_inOut.display("Patient ID not provided");
 			return false;
 		}
 		auto devs = m_map[vitals.patientId].devices;
@@ -41,7 +41,7 @@ namespace RulesBasedAlertingSystem
 			temp.deviceId = i->first;
 			if (object[i->first].is_null())
 			{
-				m_inOut.warningAlert("Device Not Registered");
+				m_inOut.display("Device Not Registered");
 				return false;
 			}
 			else
@@ -52,7 +52,7 @@ namespace RulesBasedAlertingSystem
 					vitals.vitals.push_back(temp);
 					continue;
 				}
-				m_inOut.warningAlert("Device Value Not Acceptable, Device ID : "+ temp.deviceId);
+				m_inOut.display("Device Value Not Acceptable, Device ID : "+ temp.deviceId);
 				return false;
 			}
 		}
