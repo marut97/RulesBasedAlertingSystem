@@ -1,6 +1,7 @@
 #include "IOLayer.h"
 #include "iostream"
 #include <windows.h>
+#include <stdlib.h>
 
 namespace RulesBasedAlertingSystem
 {
@@ -19,6 +20,20 @@ namespace RulesBasedAlertingSystem
 		std::string input;
 		std::getline(std::cin, input);
 		return input;
+	}
+
+	std::string IOLayer::readDevices(std::string menu, int deviceSize)
+	{
+		std::cout << menu << std::endl;
+		std::string input;
+		std::cin >> input;
+		return input;
+	}
+
+	void IOLayer::display(std::string output)
+	{
+		std::cout << output << std::endl;
+
 	}
 
 	std::string IOLayer::readVitals()
@@ -42,5 +57,9 @@ namespace RulesBasedAlertingSystem
 		SetConsoleTextAttribute(hConsole, 14);
 		std::cout << input << std::endl;
 		SetConsoleTextAttribute(hConsole, 7);
+	}
+	void IOLayer::clearScreen()
+	{
+		system("CLS");
 	}
 }

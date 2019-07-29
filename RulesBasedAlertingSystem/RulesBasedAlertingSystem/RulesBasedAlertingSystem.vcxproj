@@ -134,18 +134,39 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AlertingSystemModes.cpp" />
+    <ClCompile Include="AlertingUnit.cpp" />
+    <ClCompile Include="AlertProcessingUnit.cpp" />
+    <ClCompile Include="DeviceRegistrationUnit.cpp" />
+    <ClCompile Include="DeviceRepository.cpp" />
+    <ClCompile Include="IOLayer.cpp" />
+    <ClCompile Include="json11.cpp" />
+    <ClCompile Include="PatientRegistrationUnit.cpp" />
+    <ClCompile Include="PatientRepository.cpp" />
+    <ClCompile Include="ReceiverUnit.cpp" />
+    <ClCompile Include="SharedQueue.cpp" />
+    <ClCompile Include="VitalsRepository.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="AlertingSystemModes.h" />
+    <ClInclude Include="AlertingUnit.h" />
+    <ClInclude Include="AlertProcessingUnit.h" />
     <ClInclude Include="Alerts.h" />
     <ClInclude Include="Device.h" />
+    <ClInclude Include="DeviceRegistrationUnit.h" />
+    <ClInclude Include="DeviceRepository.h" />
     <ClInclude Include="IDeviceRepository.h" />
     <ClInclude Include="IOLayer.h" />
     <ClInclude Include="IPatientRepository.h" />
     <ClInclude Include="IVitalsRepository.h" />
+    <ClInclude Include="json11.hpp" />
     <ClInclude Include="Patient.h" />
+    <ClInclude Include="PatientRegistrationUnit.h" />
+    <ClInclude Include="PatientRepository.h" />
     <ClInclude Include="PatientVitals.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="IOLayer.cpp" />
-    <ClCompile Include="RulesBasedAlertingSystem.cpp" />
+    <ClInclude Include="ReceiverUnit.h" />
+    <ClInclude Include="SharedQueue.h" />
+    <ClInclude Include="VitalsRepository.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

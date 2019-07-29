@@ -8,6 +8,7 @@ namespace RulesBasedAlertingSystem
 	{
 	public: 
 		virtual ~IDeviceRepository() {}
+		virtual bool checkDeviceExist(std::string deviceId) = 0;
 		virtual bool registerNew(Device device) = 0;
 		virtual bool update(Device device) = 0;
 		virtual bool remove(std::string patientId) = 0;
