@@ -16,9 +16,15 @@ namespace RulesBasedAlertingSystem
 			loopControl = input.empty();
 			if (!loopControl)
 			{
+				/*m_inOut.display("enqueued");*/
 				PatientVitals vitals;
 				if(unboxInput(input, vitals))
+				{
 					m_queue.enqueue(vitals);
+					//m_inOut.display(vitals.patientId);
+				}
+					
+				loopControl = true;
 			}
 		} while (loopControl);
 	}
@@ -41,7 +47,7 @@ namespace RulesBasedAlertingSystem
 			temp.deviceId = i->first;
 			if (object[i->first].is_null())
 			{
-				m_inOut.display("Device Not Registered");
+				m_inOut.display("Device Not Registered : ");
 				return false;
 			}
 			else

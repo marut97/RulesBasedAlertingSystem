@@ -13,14 +13,12 @@ namespace RulesBasedAlertingSystem
 
 	bool AlertingUnit::compare(double min, double max, double val)
 	{
-		if (val >= min && val < max)
-			return true;
-		return false;
+		return (val >= min && val < max);
 	}
 
 	void AlertingUnit::alertUser()
 	{
-
+		//m_inOut.display("Alerting");
 		//Add clear screen here...
 		m_inOut.clearScreen();
 		m_inOut.criticalAlert("\tCritical");
@@ -40,8 +38,8 @@ namespace RulesBasedAlertingSystem
 			m_inOut.warningAlert("----------------------");
 		}
 		m_inOut.warningAlert("\tWarning");
-		m_inOut.criticalAlert("************************");
-		m_inOut.criticalAlert("************************");
+		m_inOut.warningAlert("************************");
+		m_inOut.warningAlert("************************");
 		for (auto itr = m_warningMap.begin(); itr != m_warningMap.end(); itr++)
 		{
 			if (itr->second.empty())
@@ -59,18 +57,26 @@ namespace RulesBasedAlertingSystem
 
 	void AlertingUnit::checkLimits(PatientVitals vitals)
 	{
+		//m_inOut.display("checkingLimits");
+		//m_inOut.display(vitals.patientId);
 		std::vector<Alerts> criticalVector;
 		std::vector<Alerts> warningVector;
+		//for (auto i = m_patientList.begin(); i != m_patientList.end(); i++)
+		//	m_inOut.display(i->second.toString());
 		Patient patient = m_patientList[vitals.patientId];
-		for (auto i = vitals.vitals.begin(); i != vitals.vitals.end(); i++)
+		//m_inOut.display(patient.toString());
+		for (auto i = vitals.vitals.begin(); i != vitals.vitals.end(); ++i)
 		{
+			//m_inOut.display("stuck here");
 			if (!compare(patient.devices[i->deviceId].validInputRange.min, patient.devices[i->deviceId].validInputRange.max, i->value))
 			{
 				criticalVector.push_back({ i->deviceId, i->value, "Device Malfunction : Value out of valid input range." });
 				continue;
 			}
 			auto limit = patient.devices[i->deviceId].limits;
-			for (auto j = limit.begin(); j != limit.end(); j++)
+			auto j = limit.begin();
+			bool loopControl = true;
+			do
 			{
 				if (compare(j->range.min, j->range.max, i->value))
 				{
@@ -78,20 +84,27 @@ namespace RulesBasedAlertingSystem
 					{
 					case Critical:
 						criticalVector.push_back({ i->deviceId, i->value, j->message });
+						loopControl = false;
 						break;
 					case Warning:
 						warningVector.push_back({ i->deviceId, i->value, j->message });
+						loopControl = false;
 						break;
 					case Normal:
-						continue;
+						loopControl = false;
+						break;
 					default:
 						criticalVector.push_back({ i->deviceId, i->value, "Unexpected Error : Undefined Type" });
+						loopControl = false;
 						break;
 					}
 				}
-			}
-			m_criticalMap[vitals.patientId] = criticalVector;
-			m_warningMap[vitals.patientId] = warningVector;
+				j++;
+			} while (loopControl);
+			m_criticalMap.erase(vitals.patientId);
+			m_criticalMap.insert({ vitals.patientId, criticalVector });
+			m_warningMap.erase(vitals.patientId);
+			m_warningMap.insert({ vitals.patientId, warningVector });
 			alertUser();
 		}
 

@@ -291,6 +291,11 @@ namespace RulesBasedAlertingSystem
 
 		devicesList.clear();
 		devicesList = m_deviceRepository.readAll();
+		if (devicesList.size() == 0)
+		{
+			m_inOut.display("No Device found");
+			return;
+		}
 		for (auto i = devicesList.begin(); i != devicesList.end(); i++)
 			m_inOut.display(i->toString());
 		/*if (devicesList.size() == 0)

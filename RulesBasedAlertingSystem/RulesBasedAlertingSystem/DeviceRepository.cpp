@@ -14,7 +14,7 @@ namespace RulesBasedAlertingSystem {
 	DeviceRepository::DeviceRepository(bool temp)
 	{
 		if (!temp)
-			m_deviceRepositoryPath = "..\\..\\Database\\DeviceRepo.txt";
+			m_deviceRepositoryPath = "Database\\DeviceRepo.txt";
 		else
 			m_deviceRepositoryPath = "..\\..\\..\\TestDatabase\\DeviceRepo.txt";
 	}
@@ -239,8 +239,6 @@ namespace RulesBasedAlertingSystem {
 
 		if (infile.is_open())
 		{
-
-
 			while (getline(infile, line))
 			{
 				

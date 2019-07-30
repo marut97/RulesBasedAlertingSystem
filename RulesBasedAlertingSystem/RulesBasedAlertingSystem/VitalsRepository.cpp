@@ -11,7 +11,7 @@ namespace RulesBasedAlertingSystem
 	{
 		if (!temp)
 		{
-			m_vitalsRepositoryPath = "..\\..\\Database\\";
+			m_vitalsRepositoryPath = "Database\\";
 		}
 		else
 		{
@@ -21,7 +21,8 @@ namespace RulesBasedAlertingSystem
 
 	bool VitalsRepository::writeVitals(PatientVitals vitals)
 	{
-		m_vitalsRepositoryPath.append(vitals.patientId+".txt");
+		if (m_vitalsRepositoryPath.find(".txt") == std::string::npos)
+			m_vitalsRepositoryPath.append(vitals.patientId+".txt");
 		std::string line = vitalsToString(vitals);
 		std::ofstream file;
 		file.open(m_vitalsRepositoryPath, std::ios::app);
@@ -36,7 +37,8 @@ namespace RulesBasedAlertingSystem
 
 	std::vector<PatientVitals> VitalsRepository::readVitals(std::string patientID)
 	{
-		m_vitalsRepositoryPath.append(patientID + ".txt");
+		if (m_vitalsRepositoryPath.find(".txt") == std::string::npos)
+			m_vitalsRepositoryPath.append(patientID + ".txt");
 		std::vector<PatientVitals> allVitals;
 		std::string line;
 		std::ifstream file;

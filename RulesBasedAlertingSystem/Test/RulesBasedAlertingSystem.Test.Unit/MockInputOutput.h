@@ -18,6 +18,9 @@ namespace RulesBasedAlertingSystem
 				void criticalAlert(std::string input) override;
 				void warningAlert(std::string input) override;
 				void clearScreen() override;
+
+				std::vector < std::string > critical;
+				std::vector <std::string> warning;
 			};
 		}
 	}

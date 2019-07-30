@@ -160,6 +160,9 @@
     <ProjectReference Include="..\..\RulesBasedAlertingSystem\RulesBasedAlertingSystem.vcxproj">
       <Project>{e4983d53-f044-4ec7-bb37-3fcc461e2760}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\RulesBasedAlertingSystem.Test.Unit\RulesBasedAlertingSystem.Test.Unit.vcxproj">
+      <Project>{c6b3348d-0ed8-479f-a31d-60702806dcee}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

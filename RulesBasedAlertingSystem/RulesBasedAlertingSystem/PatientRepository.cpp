@@ -11,7 +11,7 @@ namespace RulesBasedAlertingSystem
 	PatientRepository::PatientRepository(bool temp)
 	{
 		if (!temp)
-			m_patientRepositoryPath = "..\\..\\Database\\PatientRepo.txt";
+			m_patientRepositoryPath = "Database\\PatientRepo.txt";
 		else
 			m_patientRepositoryPath = "..\\..\\..\\TestDatabase\\PatientRepo.txt";
 	}

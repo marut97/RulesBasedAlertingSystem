@@ -5,9 +5,6 @@ namespace RulesBasedAlertingSystem
 {
 	class DeviceRepository : public IDeviceRepository
 	{
-
-	
-
 	public:
 		DeviceRepository(bool temp = false);
 		bool checkDeviceExist(std::string deviceId) override;

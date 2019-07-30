@@ -1,4 +1,5 @@
 #include "MockInputOutput.h"
+#include "../../RulesBasedAlertingSystem/PatientVitals.h"
 
 namespace RulesBasedAlertingSystem
 {
@@ -18,7 +19,9 @@ namespace RulesBasedAlertingSystem
 
 			std::string MockInputOutput::readVitals()
 			{
-				return{};
+				std::string input = "{ \"patientId\" : \"11\" , \"100\" : 55.5, \"200\" : 63.5, \"300\" : 66.5}";
+				return input;
+
 			}
 
 			void MockInputOutput::pause()
@@ -33,11 +36,13 @@ namespace RulesBasedAlertingSystem
 
 			void MockInputOutput::criticalAlert(std::string input)
 			{
+				critical.push_back(input);
 				return;
 			}
 
 			void MockInputOutput::warningAlert(std::string input)
 			{
+				warning.push_back(input);
 				return;
 			}
 

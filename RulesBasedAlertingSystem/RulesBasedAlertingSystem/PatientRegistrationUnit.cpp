@@ -130,6 +130,11 @@ namespace RulesBasedAlertingSystem
 	void PatientRegistrationUnit::readAllRegisteredPatients()
 	{
 		auto patients = m_patientRepo.readAll();
+		if (patients.size() == 0)
+		{
+			m_inOut.display("No Patient found");
+			return;
+		}
 		for (auto i = patients.begin(); i != patients.end(); i++)
 			m_inOut.display(i->toString());
 	}
@@ -166,7 +171,7 @@ namespace RulesBasedAlertingSystem
 			}
 			menu.append("0 to exit...\n");
 			std::string deviceID = m_inOut.readInput(menu);
-			if (stoi(deviceID) == 0)
+			if (deviceID == "0")
 				loopControl = false;
 			else if (m_deviceList.find(deviceID) == m_deviceList.end())
 			{

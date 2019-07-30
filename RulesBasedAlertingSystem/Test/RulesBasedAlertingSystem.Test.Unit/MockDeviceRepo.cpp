@@ -6,34 +6,76 @@ namespace RulesBasedAlertingSystem
 	{
 		namespace Unit
 		{
-			bool RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::checkDeviceExist(std::string deviceId)
+
+			MockDeviceRepo::MockDeviceRepo()
 			{
-				return{};
+				for (int i = 1; i < 4; i++)
+				{
+					Device dev;
+					dev.deviceId = std::to_string((i * 100));
+					dev.validInputRange = { 0,100 };
+					for(int j = 0; j < 3; j++)
+					{
+						Limits lim;
+						if (j == 0) lim.range = { 0,50 };
+						else if (j == 1) lim.range = { 50,75 };
+						else lim.range = { 75, 100 };
+						lim.type = Type(j + 1);
+						lim.message = lim.type;
+						dev.limits.push_back(lim);
+					}
+					m_devicelist.insert({ dev.deviceId, dev });
+				}
 			}
 
-			bool RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::registerNew(Device device)
+			bool MockDeviceRepo::checkDeviceExist(std::string deviceId)
 			{
-				return{};
+				return (deviceId == "100" || deviceId == "200" || deviceId == "300");
+				
 			}
 
-			bool RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::update(Device device)
+			bool MockDeviceRepo::registerNew(Device device)
 			{
-				return{};
+				m_devicelist.insert({ device.deviceId, device });
+				return true;
 			}
 
-			bool RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::remove(std::string patientId)
+			bool MockDeviceRepo::update(Device device)
 			{
-				return{};
+				if (m_devicelist.find(device.deviceId)!=m_devicelist.end())
+				{
+					m_devicelist[device.deviceId] = device;
+					return true;
+				}
+				return false;
+
 			}
 
-			RulesBasedAlertingSystem::Device RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::read(std::string deviceID)
+			bool MockDeviceRepo::remove(std::string patientId)
 			{
-				return{};
+				if (m_devicelist.find(patientId) != m_devicelist.end())
+				{
+					m_devicelist.erase(patientId);
+					return true;
+				}
+				return false;
 			}
 
-			std::vector<RulesBasedAlertingSystem::Device> RulesBasedAlertingSystem::Test::Unit::MockDeviceRepo::readAll()
+			Device MockDeviceRepo::read(std::string deviceID)
 			{
-				return{};
+				if (m_devicelist.find(deviceID) != m_devicelist.end())
+				{
+					return m_devicelist[deviceID];
+				}
+				return {};
+			}
+
+			std::vector<Device> MockDeviceRepo::readAll()
+			{
+				std::vector<Device> devList;
+				for (auto i = m_devicelist.begin(); i != m_devicelist.end(); i++)
+					devList.push_back(i->second);
+				return devList;
 			}
 		}
 	}

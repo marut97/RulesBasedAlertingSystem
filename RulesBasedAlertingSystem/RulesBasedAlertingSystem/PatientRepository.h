@@ -6,9 +6,7 @@ namespace RulesBasedAlertingSystem
 {
 	class PatientRepository : public IPatientRepository
 	{
-
 	public:
-
 		PatientRepository(bool temp = false);
 		bool checkPatientExists(std::string patientId) override;
 		int getPatientLineNumber(std::string patientId);
@@ -21,6 +19,5 @@ namespace RulesBasedAlertingSystem
 		std::vector<Patient> readAll() override;
 	private:
 		std::string m_patientRepositoryPath;
-
 	};
 }

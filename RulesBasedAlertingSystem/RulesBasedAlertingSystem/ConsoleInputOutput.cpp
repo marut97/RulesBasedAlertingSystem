@@ -37,8 +37,7 @@ namespace RulesBasedAlertingSystem
 
 	void ConsoleInputOutput::pause()
 	{
-		std::cin.ignore();
-		std::cin.get();
+		system("pause");
 	}
 
 	void ConsoleInputOutput::criticalAlert(std::string input)
