@@ -1,6 +1,15 @@
-﻿  AlertingSystemModes.cpp
-  Generating Code...
-  Skipping... (no relevant changes detected)
+﻿  VitalsRepository.cpp
+  SharedQueue.cpp
+  ReceiverUnit.cpp
   PatientRepository.cpp
+  PatientRegistrationUnit.cpp
+c:\users\320052456\documents\bootcamp\casestudy1\rulesbasedalertingsystem\rulesbasedalertingsystem\patientregistrationunit.cpp(92): warning C4267: 'initializing': conversion from 'size_t' to 'int', possible loss of data
+  json11.cpp
+  ConsoleInputOutput.cpp
   DeviceRepository.cpp
+  DeviceRegistrationUnit.cpp
+  AlertProcessingUnit.cpp
+  AlertingUnit.cpp
+  AlertingSystemModes.cpp
+  Generating Code...
   RulesBasedAlertingSystem.vcxproj -> C:\Users\320052456\Documents\Bootcamp\CaseStudy1\RulesBasedAlertingSystem\x64\Debug\RulesBasedAlertingSystem.lib

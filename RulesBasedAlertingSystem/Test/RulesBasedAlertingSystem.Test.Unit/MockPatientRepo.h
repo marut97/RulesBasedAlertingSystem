@@ -17,6 +17,7 @@ namespace RulesBasedAlertingSystem
 				bool remove(std::string patientId) override;
 				Patient read(std::string patientID) override;
 				std::vector<Patient> readAll() override;
+
 				std::map<std::string, Patient> patientList;
 			};
 		}

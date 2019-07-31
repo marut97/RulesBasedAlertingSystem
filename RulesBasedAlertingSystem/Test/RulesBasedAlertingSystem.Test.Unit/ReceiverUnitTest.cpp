@@ -2,6 +2,7 @@
 #include "../../RulesBasedAlertingSystem/ReceiverUnit.h"
 #include "MockInputOutput.h"
 #include "MockPatientRepo.h"
+#include <windows.h>
 
 namespace RulesBasedAlertingSystem
 {
@@ -17,18 +18,8 @@ namespace RulesBasedAlertingSystem
 			TEST_F(ReceiverUnitTest, ValidInputTest)
 			{
 				SharedQueue queue;
-				for (int i = 1; i < 4; i++)
-				{
-					PatientVitals vit;
-					vit.patientId = std::to_string(i) + std::to_string(i);
-					for(int j = 0; j <3; j++)
-					{
-						vit.vitals.push_back({ std::to_string((j * 100)), (j + 1)*27.5 });
-					}
-					
-				}
-
 				std::map<std::string, Patient> map;
+				
 				MockPatientRepo repo;
 				auto patients = repo.readAll();
 				for (auto i = patients.begin(); i != patients.end(); i++)
@@ -36,8 +27,21 @@ namespace RulesBasedAlertingSystem
 				MockInputOutput inOut;
 				ReceiverUnit receiver(queue, map, inOut);
 
-				receiver.inputProcess();
-				
+				std::thread receiverThread(&ReceiverUnit::inputProcess, &receiver);
+
+				std::this_thread::sleep_for(std::chrono::seconds(5));
+				//receiverThread.join();
+				ASSERT_EQ(queue.isEmpty(), false);
+				auto data = queue.dequeue();
+				ASSERT_EQ(data.patientId, "11");
+				ASSERT_EQ(data.vitals.size(), 3);
+				data = queue.dequeue();
+				data = queue.dequeue();
+				ASSERT_EQ(queue.isEmpty(), true);
+				ASSERT_EQ(TerminateThread(receiverThread.native_handle(), 0),1);
+				//receiverThread.join();
+				//receiverThread.detach();
+				std::terminate();
 			}
 		}
 	}

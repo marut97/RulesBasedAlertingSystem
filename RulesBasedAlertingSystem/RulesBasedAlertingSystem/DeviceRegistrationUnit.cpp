@@ -274,7 +274,7 @@ namespace RulesBasedAlertingSystem
 
 		updateDevice.limits = getLimits(updateDevice.validInputRange);
 
-		if (m_deviceRepository.registerNew(updateDevice))
+		if (m_deviceRepository.update(updateDevice))
 		{
 			m_inOut.warningAlert("Device successfully updated");
 		}
@@ -325,7 +325,13 @@ namespace RulesBasedAlertingSystem
 		string deviceId = m_inOut.readInput("Enter Device ID : ");
 		
 		Device device = (m_deviceRepository.read(deviceId));
-		m_inOut.display(device.toString());
+		if (device.deviceId == "")
+		{
+			m_inOut.display("Device ID not found. ");
+
+		}
+		else
+			m_inOut.display(device.toString());
 
 		/*if (device.deviceId == "")
 		{

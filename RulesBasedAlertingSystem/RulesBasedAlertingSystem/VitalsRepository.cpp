@@ -21,15 +21,14 @@ namespace RulesBasedAlertingSystem
 
 	bool VitalsRepository::writeVitals(PatientVitals vitals)
 	{
-		if (m_vitalsRepositoryPath.find(".txt") == std::string::npos)
-			m_vitalsRepositoryPath.append(vitals.patientId+".txt");
 		std::string line = vitalsToString(vitals);
 		std::ofstream file;
-		file.open(m_vitalsRepositoryPath, std::ios::app);
+		file.open(m_vitalsRepositoryPath + vitals.patientId + ".txt", std::ios::app);
 		if (file.is_open())
 		{
 			file << line << std::endl;
 			file.close();
+
 			return true;
 		}
 		return false;
@@ -37,12 +36,10 @@ namespace RulesBasedAlertingSystem
 
 	std::vector<PatientVitals> VitalsRepository::readVitals(std::string patientID)
 	{
-		if (m_vitalsRepositoryPath.find(".txt") == std::string::npos)
-			m_vitalsRepositoryPath.append(patientID + ".txt");
 		std::vector<PatientVitals> allVitals;
 		std::string line;
 		std::ifstream file;
-		file.open(m_vitalsRepositoryPath);
+		file.open(m_vitalsRepositoryPath + patientID + ".txt");
 		if (file.is_open())
 		{
 			while (std::getline(file, line))

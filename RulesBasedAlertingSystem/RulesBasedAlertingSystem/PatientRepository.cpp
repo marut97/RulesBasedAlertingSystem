@@ -138,7 +138,7 @@ namespace RulesBasedAlertingSystem
 			}
 			patient.patientId = patientVector[0];
 
-			for (int i=0;i<stoi(patientVector[1]);i++)
+			for (int i = 0; i<stoi(patientVector[1]); i++)
 			{
 				deviceId = patientVector[vectorIndex++];
 				device.deviceId = patientVector[vectorIndex++];
@@ -155,6 +155,7 @@ namespace RulesBasedAlertingSystem
 				}
 
 				patient.devices.insert(pair<string, Device>(deviceId, device));
+				device.limits.clear();
 			}
 
 			return patient;
@@ -166,6 +167,7 @@ namespace RulesBasedAlertingSystem
 			return nullPatient;
 		}
 	}
+
 
 	bool PatientRepository::registerNew(Patient patient)
 	{

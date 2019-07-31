@@ -19,9 +19,13 @@ namespace RulesBasedAlertingSystem
 
 			std::string MockInputOutput::readVitals()
 			{
-				std::string input = "{ \"patientId\" : \"11\" , \"100\" : 55.5, \"200\" : 63.5, \"300\" : 66.5}";
-				return input;
-
+				if (count < 3)
+				{
+					count++;
+					return "{ \"patientId\" : \"11\" , \"100\" : 55.5, \"200\" : 63.5, \"300\" : 66.5}";
+				}
+				count++;
+					return "";
 			}
 
 			void MockInputOutput::pause()

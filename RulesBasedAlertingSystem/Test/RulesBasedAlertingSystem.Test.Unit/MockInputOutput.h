@@ -21,6 +21,7 @@ namespace RulesBasedAlertingSystem
 
 				std::vector < std::string > critical;
 				std::vector <std::string> warning;
+				int count = 0;
 			};
 		}
 	}
